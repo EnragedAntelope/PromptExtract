@@ -8,7 +8,7 @@ Works even if your workflow uses `ShowText`, direct `CLIPTextEncode` inputs, or 
 
 ## Features
 
-- ✅ Works with **any workflow** (not limited to `ShowText|pysssss` nodes).  
+- ✅ Works with **most workflows**.  
 - ✅ Finds the **exact prompt** that was actually used in sampling.  
 - ✅ Handles direct text in `CLIPTextEncode` or linked string nodes.  
 - ✅ Outputs to plain text (`.txt`) or CSV (`.csv`).  
@@ -21,8 +21,8 @@ Works even if your workflow uses `ShowText`, direct `CLIPTextEncode` inputs, or 
 
 1. Clone this repo or download the script:
    ```bash
-   git clone https://github.com/yourusername/comfyui-prompt-extractor.git
-   cd comfyui-prompt-extractor
+   git clone https://github.com/EnragedAntelope/PromptExtract.git
+   cd PromptExtract
    ```
 
 2. Install requirements:
