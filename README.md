@@ -108,5 +108,3 @@ image_002.png,"A futuristic city skyline at dusk, neon reflections glowing on gl
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
-
-```
