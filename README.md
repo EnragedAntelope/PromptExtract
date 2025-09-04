@@ -22,7 +22,7 @@ Works even if your workflow uses `ShowText`, direct `CLIPTextEncode` inputs, or 
    ```bash
    git clone https://github.com/yourusername/comfyui-prompt-extractor.git
    cd comfyui-prompt-extractor
-```
+   ```
 
 2. Install requirements:
 
