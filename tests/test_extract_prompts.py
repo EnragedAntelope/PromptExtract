@@ -162,6 +162,23 @@ def test_api_prompt_linked_text():
     assert prompt == "prompt from a text node"
 
 
+def test_api_prompt_runtime_generated_text_is_skipped():
+    # Encoder text comes from a concatenator fed by an LLM node: the real
+    # prompt is not in the API chunk, so skip rather than return the delimiter.
+    graph = json.loads(json.dumps(SAMPLE_API_PROMPT))
+    graph["20"] = {"class_type": "SomeLLMNode",
+                   "inputs": {"prompt": ["21", 0], "model_selection": "some-model-name"}}
+    graph["21"] = {"class_type": "Textbox", "inputs": {"text": "describe a cat"}}
+    graph["10"] = {"class_type": "StringConcatenate",
+                   "inputs": {"string_a": ["1", 2], "string_b": ["20", 0], "delimiter": ", "}}
+    graph["9"] = {"class_type": "ShowText|pysssss",
+                  "inputs": {"text_0": "stale text from the previous run", "text": ["10", 0]}}
+    graph["3"]["inputs"]["text"] = ["9", 0]
+    prompt, err = extract_from_api_prompt(graph)
+    assert prompt is None
+    assert err == "no-prompt-resolved"
+
+
 def test_parameters_extraction():
     prompt, err = extract_from_parameters(SAMPLE_PARAMETERS)
     assert err is None

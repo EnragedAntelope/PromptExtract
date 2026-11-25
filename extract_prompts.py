@@ -265,18 +265,16 @@ def _api_resolve_text(prompt_graph, node_id, visited=None):
         if res:
             return res
 
-    # Generic fallback: longest inline string among this node's inputs
+    # A node with linked inputs computes its text at run time (concatenators,
+    # LLM nodes); the API chunk holds only its settings, so its inline strings
+    # are delimiters or options, not the prompt.
+    if any(_api_link(v) for v in inputs.values()):
+        return None
+
+    # Pure source node (text box, primitive): longest inline string
     strs = [v for v in inputs.values() if isinstance(v, str) and v.strip()]
     if strs:
         return max(strs, key=len).strip()
-
-    # Follow any remaining links
-    for value in inputs.values():
-        src = _api_link(value)
-        if src:
-            res = _api_resolve_text(prompt_graph, src, visited)
-            if res:
-                return res
     return None
 
 
